@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "       Benjamin R. Harris
 "
 " Sections:
@@ -59,7 +59,7 @@ let g:is_bash=1
 set cursorline
 
 " Show a symbol indicating the end of the position you're changing
-set cpoptions+=$:
+set cpoptions+=$
 
 " Have some space around the current line when moving vertically
 set scrolloff=3
@@ -267,5 +267,5 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
- 
+
 nnoremap <F9> :call NumberToggle()<cr>
