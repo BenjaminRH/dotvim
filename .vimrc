@@ -59,7 +59,7 @@ let g:is_bash=1
 set cursorline
 
 " Show a symbol indicating the end of the position you're changing
-set cpoptions+=$
+"set cpoptions+=$
 
 " Have some space around the current line when moving vertically
 set scrolloff=3
@@ -154,6 +154,9 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
+
+" Recognize markdown files
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -251,6 +254,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle paste mode on and off
 "map <leader>pp :setlocal paste!<cr>
+
+" Saves with sudo in case you've forgotten
+cmap w!! %!sudo tee > /dev/null %
 
 " Alias the unnamed register to the + register (X Windows clipboard)
 set clipboard=unnamedplus
