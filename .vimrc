@@ -186,6 +186,9 @@ set si
 " Do not wrap lines
 set nowrap
 
+" Except for text files
+autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
+
 " Indicator chars
 set list
 set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
@@ -249,7 +252,7 @@ nmap <leader>bda :1,1000 bd<cr>
 map <leader>t :NERDTreeToggle<cr>
 
 " Open NERDTree automatically when vim starts up if no files were specified
-autocmd vimenter * if !argc() | NERDTree | endif
+"autocmd vimenter * if !argc() | NERDTree | endif
 
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -259,10 +262,10 @@ vmap <leader>a <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
 
 " Toggle the MiniBufExplorer window
-map <leader>ls :MBEToggle<cr>
+map <leader>ls :MBEToggle<cr>:MBEFocus<cr>
 
 " Focus on the MiniBufExplorer window
-map <leader>b :MBEFocus<cr>
+map <leader>f :MBEFocus<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
