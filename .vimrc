@@ -217,12 +217,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
@@ -235,11 +229,23 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
+" Switch to the next buffer
+nmap <leader>bn :bn<cr>
+
+" Or the previous buffer
+nmap <leader>bp :bp<cr>
+
+" Delete the current buffer (preserving the window)
+nmap <leader>bd :bd<cr>
+
+" Delete all the open buffers
+nmap <leader>bda :1,1000 bd<cr>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Toggle NERDTree
+" Toggle the NERDTree window
 map <leader>t :NERDTreeToggle<cr>
 
 " Open NERDTree automatically when vim starts up if no files were specified
@@ -251,6 +257,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Interactive mode for vim-easy-align (repeats with ., etc.)
 vmap <leader>a <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
+
+" Toggle the MiniBufExplorer window
+map <leader>ls :MBEToggle<cr>
+
+" Focus on the MiniBufExplorer window
+map <leader>b :MBEFocus<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
