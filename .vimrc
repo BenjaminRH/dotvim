@@ -123,9 +123,13 @@ set matchpairs+=<:>
 :nnoremap <CR> :nohlsearch<cr>
 
 " Hide some GUI crap
-set guioptions-=m
-set guioptions-=T
-set guioptions-=r
+set guioptions-=m " No menu bar
+set guioptions-=T " No toolbar
+set guioptions-=r " No scrollbar (right)
+set guioptions-=R " No scrollbar (right, on vertical split windows)
+set guioptions-=l " No scrollbar (left)
+set guioptions-=L " No scrollbar (left, on vertical split windows)
+set guioptions-=b " No scrollbar (bottom)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
