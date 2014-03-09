@@ -182,15 +182,15 @@ set shiftwidth=4
 " set textwidth=500
 
 " Auto indent
-set ai
+set autoindent
 
 " Smart indent
-set si
+set smartindent
 
 " Do not wrap lines
 set nowrap
 
-" Except for text files
+" But wrap lines for text/markdown files
 autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
 
 " Indicator chars
@@ -199,8 +199,8 @@ set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
 set showbreak=↪\
 
 " Joining lines
-set formatoptions+=j              " Delete comment char when joining commented lines
-set nojoinspaces                  " Use only 1 space after "." when joining lines, not 2
+set formatoptions+=j " Delete comment char when joining commented lines
+set nojoinspaces     " Use only 1 space after "." when joining lines, not 2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -227,7 +227,7 @@ map <C-l> <C-W>l
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
@@ -270,6 +270,10 @@ map <leader>ls :MBEToggle<cr>:MBEFocus<cr>
 
 " Focus on the MiniBufExplorer window
 map <leader>f :MBEFocus<cr>
+
+" Open a new scratch buffer from vim-scratch
+nmap <leader>s  :Scratch<cr>
+nmap <leader>ss :Sscratch<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
