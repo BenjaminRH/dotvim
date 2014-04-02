@@ -253,7 +253,7 @@ nmap <leader>bda :1,1000 bd<cr>
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle the NERDTree window
-map <leader>dir :NERDTreeToggle<cr>
+map <leader>d :NERDTreeToggle<cr>
 
 " Open NERDTree automatically when vim starts up if no files were specified
 "autocmd vimenter * if !argc() | NERDTree | endif
@@ -276,7 +276,7 @@ nmap <leader>s  :Scratch<cr>
 nmap <leader>ss :Sscratch<cr>
 
 " Toggle the Tagbar
-nmap <leader>tag :TagbarToggle<cr>
+nmap <leader>t :TagbarToggle<cr>
 
 " TagBar configuration for golang
 let g:tagbar_type_go = {
