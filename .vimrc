@@ -139,11 +139,16 @@ set guioptions-=b " No scrollbar (bottom)
 " Enable syntax highlighting
 syntax on
 
-" Set the colorscheme background
-set background=light
-
 " Set the colorscheme
 colorscheme solarized
+
+" Set the colorscheme background
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+    let g:solarized_termcolors=256
+endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
