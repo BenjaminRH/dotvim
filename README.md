@@ -12,3 +12,10 @@ My vim configuration
     git submodule update
     cd ..
     ln -s .vim/.vimrc
+
+**Plugins to consider:**
+
+ * unimpaired
+ * abolish
+ * detectindent
+
