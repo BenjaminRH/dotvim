@@ -75,7 +75,7 @@ set sidescrolloff=15
 set sidescroll=1
 
 " Add non-relative line numbers
-set number
+set relativenumber
 
 "Always show current position
 set ruler
