@@ -74,7 +74,8 @@ set sidescrolloff=15
 " When scrolling sideways, advance cursor by this many characters
 set sidescroll=1
 
-" Add non-relative line numbers
+" Add non-relative line numbers where the current line displays the actual line number
+set number
 set relativenumber
 
 "Always show current position
@@ -451,7 +452,7 @@ set clipboard=unnamedplus
 " Toggle relative/absolute numbering
 function! NumberToggle()
   if(&relativenumber == 1)
-    set number
+    set norelativenumber
   else
     set relativenumber
   endif
