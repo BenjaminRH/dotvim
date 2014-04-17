@@ -207,6 +207,9 @@ set nowrap
 " But wrap lines for text/markdown files
 autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
 
+" Go (golang) specific indentation settings
+autocmd FileType go set noexpandtab
+
 " Indicator chars
 set list
 set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
