@@ -133,6 +133,10 @@ set guioptions-=l " No scrollbar (left)
 set guioptions-=L " No scrollbar (left, on vertical split windows)
 set guioptions-=b " No scrollbar (bottom)
 
+" No damn beeping
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -142,6 +146,9 @@ syntax on
 
 " Set the colorscheme
 colorscheme solarized
+
+" Make the Solarized colorscheme work properly in decent terminals
+let g:solarized_termcolors=256
 
 " Set the colorscheme background
 if has('gui_running')
