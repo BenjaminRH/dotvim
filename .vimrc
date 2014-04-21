@@ -50,6 +50,7 @@ inoremap ii <Esc>
 
 " Get the shell sorted out properly (fix issues with zsh, etc.)
 set shell=bash
+set shellcmdflag=-ic
 let g:is_bash=1
 
 
