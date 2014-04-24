@@ -123,7 +123,7 @@ set showmatch
 set matchpairs+=<:>
 
 " Clear the search buffer when hitting return
-:nnoremap <CR> :nohlsearch<cr>
+:nnoremap <leader><cr> :nohlsearch<cr>
 
 " Hide some GUI crap
 set guioptions-=m " No menu bar
@@ -289,10 +289,6 @@ map <leader>ls :MBEToggle<cr>:MBEFocus<cr>
 " Focus on the MiniBufExplorer window
 map <leader>f :MBEFocus<cr>
 
-" Open a new scratch buffer from vim-scratch
-nmap <leader>s  :Scratch<cr>
-nmap <leader>ss :Sscratch<cr>
-
 " Toggle the Tagbar
 nmap <leader>t :TagbarToggle<cr>
 
@@ -455,6 +451,9 @@ cmap w!! %!sudo tee > /dev/null %
 
 " Alias the unnamed register to the + register (X Windows clipboard)
 set clipboard=unnamedplus
+
+" Find TODO comments in the current working directory
+noremap <Leader>todo :noautocmd vimgrep /TODO/j **/*.*<CR>:cw<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
