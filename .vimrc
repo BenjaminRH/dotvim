@@ -281,7 +281,7 @@ map <leader>d :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Interactive mode for vim-easy-align (repeats with ., etc.)
-vmap <leader>a <Plug>(EasyAlign)
+vmap <Enter>   <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
 
 " Automatically close html-style tags
