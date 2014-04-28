@@ -148,15 +148,16 @@ syntax on
 " Set the colorscheme
 colorscheme solarized
 
-" Make the Solarized colorscheme work properly in decent terminals
-let g:solarized_termcolors=256
-
 " Set the colorscheme background
 if has('gui_running')
     set background=light
 else
+    " Make the Solarized colorscheme work properly in decent terminals
     set background=dark
+    let g:solarized_termtrans=1
     let g:solarized_termcolors=256
+    let g:solarized_contrast="high"
+    let g:solarized_visibility="high"
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -282,6 +283,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Interactive mode for vim-easy-align (repeats with ., etc.)
 vmap <leader>a <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
+
+" Automatically close html-style tags
+autocmd FileType xhtml,xml,html,markdown,blade source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
 
 " Toggle the MiniBufExplorer window
 map <leader>ls :MBEToggle<cr>:MBEFocus<cr>
