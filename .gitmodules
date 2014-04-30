@@ -52,3 +52,6 @@
 [submodule "bundle/html-autoclosetag"]
 	path = bundle/html-autoclosetag
 	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
+	url = https://github.com/fatih/vim-go.git

@@ -280,6 +280,9 @@ map <leader>d :NERDTreeToggle<cr>
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Supertabs should decide which completion method to use automatically
+let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
+
 " Interactive mode for vim-easy-align (repeats with ., etc.)
 vmap <Enter>   <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
@@ -324,6 +327,20 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" VIM-GO SETTING:
+" Import the package under the cursor
+au FileType go nmap <Leader>gi <Plug>(go-import)
+" Open the relevant Godoc for the word under the cursor
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gvd <Plug>(go-doc-vertical)
+" Go run, build, and test
+au FileType go nmap <leader>gr <Plug>(go-run)
+au FileType go nmap <leader>gb <Plug>(go-build)
+au FileType go nmap <leader>gt <Plug>(go-test)
+" Go def
+au FileType go nmap <Leader>gf <Plug>(go-def-split)
+au FileType go nmap <Leader>gvf <Plug>(go-def-vertical)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
