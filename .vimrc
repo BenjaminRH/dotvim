@@ -77,7 +77,7 @@ set sidescroll=1
 
 " Add non-relative line numbers where the current line displays the actual line number
 set number
-set relativenumber
+set norelativenumber
 
 "Always show current position
 set ruler
@@ -177,6 +177,9 @@ set noswapfile
 
 " Recognize markdown files
 autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" Save more easily
+map <C-s> :w<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -329,6 +332,8 @@ let g:tagbar_type_go = {
 \ }
 
 " VIM-GO SETTING:
+" Turn off auto-installation of requried binaries
+let g:go_disable_autoinstall = 1
 " Import the package under the cursor
 au FileType go nmap <Leader>gi <Plug>(go-import)
 " Open the relevant Godoc for the word under the cursor
