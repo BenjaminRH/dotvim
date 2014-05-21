@@ -283,6 +283,9 @@ map <leader>d :NERDTreeToggle<cr>
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Add Mustache/Handlebars tag autocompletion and stuff (abbreviations)
+let g:mustache_abbreviations = 1
+
 " Supertabs should decide which completion method to use automatically
 let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
 
