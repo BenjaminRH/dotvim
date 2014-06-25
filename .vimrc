@@ -283,6 +283,9 @@ map <leader>d :NERDTreeToggle<cr>
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Run the IndentConsistencyCop
+map <leader>r :IndentConsistencyCop<cr>
+
 " Add Mustache/Handlebars tag autocompletion and stuff (abbreviations)
 let g:mustache_abbreviations = 1
 

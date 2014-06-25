@@ -58,3 +58,6 @@
 [submodule "bundle/vim-mustache-handlebars"]
 	path = bundle/vim-mustache-handlebars
 	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule "bundle/IndentConsistencyCop"]
+	path = bundle/IndentConsistencyCop
+	url = https://github.com/vim-scripts/IndentConsistencyCop.git
