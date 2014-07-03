@@ -16,6 +16,7 @@ My vim configuration
 **Plugins to consider:**
 
  * vinegar (to replace NERDTree)
+ * splitjoin
  * unimpaired
  * abolish
  * detectindent
