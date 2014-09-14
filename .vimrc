@@ -290,8 +290,8 @@ map <leader>r :IndentConsistencyCop<cr>
 let g:mustache_abbreviations = 1
 
 " Supertabs should decide which completion method to use automatically
-let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
-let g:SuperTabClosePreviewOnPopupClose = 1 " And don't leave that annoying preview window open
+" let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
+" let g:SuperTabClosePreviewOnPopupClose = 1 " And don't leave that annoying preview window open
 
 " Interactive mode for vim-easy-align (repeats with ., etc.)
 vmap <Enter>   <Plug>(EasyAlign)
@@ -308,35 +308,6 @@ map <leader>f :MBEFocus<cr>
 
 " Toggle the Tagbar
 nmap <leader>t :TagbarToggle<cr>
-
-" TagBar configuration for golang
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
 
 " VIM-GO SETTING:
 " Turn off auto-installation of requried binaries
