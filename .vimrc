@@ -280,6 +280,10 @@ map <leader>d :NERDTreeToggle<cr>
 " Open NERDTree automatically when vim starts up if no files were specified
 "autocmd vimenter * if !argc() | NERDTree | endif
 
+
+# Use TernJS for autocompleting javascript
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -292,6 +296,9 @@ let g:mustache_abbreviations = 1
 " Supertabs should decide which completion method to use automatically
 " let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
 " let g:SuperTabClosePreviewOnPopupClose = 1 " And don't leave that annoying preview window open
+
+" YouCompleteMe automatically close annoying completion preview window open
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 " Interactive mode for vim-easy-align (repeats with ., etc.)
 vmap <Enter>   <Plug>(EasyAlign)
