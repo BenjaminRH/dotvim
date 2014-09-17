@@ -280,6 +280,9 @@ map <leader>d :NERDTreeToggle<cr>
 " Open NERDTree automatically when vim starts up if no files were specified
 "autocmd vimenter * if !argc() | NERDTree | endif
 
+" DETECT INDENT
+:let g:detectindent_preferred_expandtab = 1
+:let g:detectindent_preferred_indent = 4
 
 " Use TernJS for autocompleting JavaScript
 autocmd FileType javascript setlocal omnifunc=tern#Complete
