@@ -281,8 +281,9 @@ map <leader>d :NERDTreeToggle<cr>
 "autocmd vimenter * if !argc() | NERDTree | endif
 
 " DETECT INDENT
-:let g:detectindent_preferred_expandtab = 1
-:let g:detectindent_preferred_indent = 4
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+autocmd BufReadPost * :DetectIndent " Run automatically when opening a file
 
 " Use TernJS for autocompleting JavaScript
 autocmd FileType javascript setlocal omnifunc=tern#Complete
