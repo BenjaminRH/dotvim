@@ -48,7 +48,7 @@ nmap <leader>w :w!<cr>
 " Fast mode escape
 inoremap ii <Esc>
 
-" Get the shell sorted out properly (fix issues with zsh, etc.)
+" Get the shell sorted out properly
 set shell=bash
 set shellcmdflag=-ic
 let g:is_bash=1
@@ -281,8 +281,11 @@ map <leader>d :NERDTreeToggle<cr>
 "autocmd vimenter * if !argc() | NERDTree | endif
 
 
-# Use TernJS for autocompleting javascript
+" Use TernJS for autocompleting JavaScript
 autocmd FileType javascript setlocal omnifunc=tern#Complete
+
+" Syntastic should use JSHint for JavaScript debugging
+let g:syntastic_javascript_checkers = ['jshint']
 
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
