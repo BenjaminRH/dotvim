@@ -111,7 +111,7 @@ set smartcase
 set gdefault
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
@@ -293,9 +293,6 @@ let g:syntastic_javascript_checkers = ['jshint']
 
 " Close vim if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Run the IndentConsistencyCop
-map <leader>r :IndentConsistencyCop<cr>
 
 " Add Mustache/Handlebars tag autocompletion and stuff (abbreviations)
 let g:mustache_abbreviations = 1
