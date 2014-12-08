@@ -320,6 +320,9 @@ map <leader>f :MBEFocus<cr>
 " Toggle the Tagbar
 nmap <leader>t :TagbarToggle<cr>
 
+" Search should use very magic regex
+let g:VeryMagic = 1
+
 " VIM-GO SETTING:
 " Turn off auto-installation of requried binaries
 let g:go_disable_autoinstall = 1
