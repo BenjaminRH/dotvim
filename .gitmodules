@@ -79,3 +79,9 @@
 [submodule "bundle/vim-visual-star-search"]
 	path = bundle/vim-visual-star-search
 	url = https://github.com/bronson/vim-visual-star-search.git
+[submodule "bundle/CRDispatcher"]
+	path = bundle/CRDispatcher
+	url = https://github.com/coot/CRDispatcher.git
+[submodule "bundle/EnchantedVim"]
+	path = bundle/EnchantedVim
+	url = https://github.com/coot/EnchantedVim.git
