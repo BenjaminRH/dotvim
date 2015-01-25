@@ -11,7 +11,7 @@ My vim configuration
     git submodule init
     git submodule update
     cd ..
-    ln -s .vim/.vimrc
+    ln -s .vim/vimrc .vimrc
 
 **Plugins to consider:**
 
