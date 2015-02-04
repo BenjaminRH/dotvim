@@ -465,8 +465,8 @@ endfunction
 cmap w!! %!sudo tee > /dev/null %
 
 " Alias the unnamed register to the + register (X Windows clipboard)
-set clipboard=unnamedplus " Linux
-"set clipboard=unnamed " Mac
+"set clipboard=unnamedplus " Linux
+set clipboard=unnamed " Mac
 
 " Find TODO comments in the current working directory
 noremap <Leader>todo :noautocmd vimgrep /TODO/j **/*.*<CR>:cw<CR>
