@@ -1,9 +1,12 @@
-[submodule "bundle/completor.vim"]
-	path = bundle/completor.vim
-	url = git@github.com:maralla/completor.vim.git
 [submodule "bundle/ctrlp.vim"]
 	path = bundle/ctrlp.vim
 	url = git@github.com:ctrlpvim/ctrlp.vim.git
+[submodule "bundle/jedi-vim"]
+	path = bundle/jedi-vim
+	url = git@github.com:davidhalter/jedi-vim.git
+[submodule "bundle/quickfix-reflector.vim"]
+	path = bundle/quickfix-reflector.vim
+	url = git@github.com:stefandtw/quickfix-reflector.vim.git
 [submodule "bundle/splitjoin.vim"]
 	path = bundle/splitjoin.vim
 	url = git@github.com:AndrewRadev/splitjoin.vim.git
@@ -22,6 +25,9 @@
 [submodule "bundle/vim-buftabline"]
 	path = bundle/vim-buftabline
 	url = git@github.com:ap/vim-buftabline.git
+[submodule "bundle/vim-clang"]
+	path = bundle/vim-clang
+	url = git@github.com:justmao945/vim-clang.git
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
@@ -34,6 +40,9 @@
 [submodule "bundle/vim-easyoperator-line"]
 	path = bundle/vim-easyoperator-line
 	url = git@github.com:haya14busa/vim-easyoperator-line.git
+[submodule "bundle/vim-grepper"]
+	path = bundle/vim-grepper
+	url = git@github.com:mhinz/vim-grepper.git
 [submodule "bundle/vim-mundo"]
 	path = bundle/vim-mundo
 	url = git@github.com:simnalamburt/vim-mundo.git
@@ -52,3 +61,6 @@
 [submodule "bundle/vim-visual-star-search"]
 	path = bundle/vim-visual-star-search
 	url = https://github.com/bronson/vim-visual-star-search.git
+[submodule "bundle/VimCompletesMe"]
+	path = bundle/VimCompletesMe
+	url = git@github.com:ajh17/VimCompletesMe.git

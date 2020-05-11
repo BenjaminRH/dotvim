@@ -120,7 +120,7 @@ set showmatch
 set matchpairs+=<:>
 
 " Clear the search buffer when hitting return
-:nnoremap <leader><CR> :nohlsearch<CR>
+:nnoremap <Leader><CR> :nohlsearch<CR>
 
 " No damn beeping
 set noerrorbells visualbell t_vb=
@@ -166,7 +166,8 @@ set noswapfile
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " Save more easily
-map <C-s> :w<CR>
+" NOTE: disabled because this messes with other mappings and is annoying
+"map <C-s> :w<CR>
 
 " Save undo history
 set undofile
@@ -239,7 +240,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<CR>:pwd<CR>
+map <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -251,17 +252,33 @@ autocmd BufReadPost *
 set viminfo^=%
 
 " Switch to the next buffer
-nmap <leader>bn :bn<CR>
+nmap <Leader>bn :bn<CR>
 
 " Or the previous buffer
-nmap <leader>bp :bp<CR>
+nmap <Leader>bp :bp<CR>
 
 " Delete the current buffer (preserving the window)
-nmap <leader>bd :bd<CR>
+nmap <Leader>bd :bd<CR>
 
 " Delete all the open buffers
-nmap <leader>bda :1,1000 bd<CR>
+nmap <Leader>bda :1,1000 bd<CR>
 
+" Quickfix window
+nmap <Leader>qo :copen<CR>
+nmap <Leader>qc :cclose<CR>
+nmap <Leader>qn :cnext<CR>
+nmap <Leader>qp :cprevious<CR>
+" Local window
+nmap <Leader>lo :copen<CR>
+nmap <Leader>lc :cclose<CR>
+nmap <Leader>ln :cnext<CR>
+nmap <Leader>lp :cprevious<CR>
+
+" Manage buffers
+nnoremap <Space> :ls<CR>:b<Space>
+nnoremap <Leader>bb :ls<CR>:b<Space>
+nnoremap <Leader>bv :ls<CR>:vsp<Space>\|<Space>b<Space>
+nnoremap <Leader>bs :ls<CR>:sp<Space>\|<Space>b<Space>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
@@ -272,28 +289,55 @@ let g:syntastic_javascript_checkers = ['jshint']
 " Interactive mode for vim-easy-align
 " TIP: press <C-x> for regex, or :EasyAlign /regex/
 vmap <Enter>   <Plug>(EasyAlign)
-vmap <leader>a <Plug>(EasyAlign)
-nmap <leader>a <Plug>(EasyAlign)
+vmap <Leader>a <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
 
 " Easymotion
-map <Leader><Leader> <Plug>(easymotion-prefix)
+"map <Leader><Leader> <Plug>(easymotion-prefix)
+" Move to char
+map  <Leader>c <Plug>(easymotion-bd-f)
+nmap <Leader>c <Plug>(easymotion-overwin-f)
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
 
 " Ctrl+P
-map <Space> :CtrlPBuffer<CR>
-map <Space>b :CtrlPBuffer<CR>
-map <Space>f :CtrlP<CR>
-map <Space>m :CtrlPMixed<CR>
+nmap <Leader>pp :CtrlP<CR>
+nmap <Leader>pb :CtrlPBuffer<CR>
+nmap <Leader>pm :CtrlPMixed<CR>
 " Recognize project root
 let g:ctrlp_root_markers = ['.git', '.hg', '.svn', '.idea']
 " Ignore files/directories (including those listed in .gitignore)
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-" Completor
-let g:completor_python_binary = '/usr/local/bin/python'
-let g:completor_clang_binary = '/usr/bin/clang'
-
 " Mundo (undo visualization)
 map U :MundoToggle<CR>
+
+" VimCompletesMe
+let b:vcm_tab_complete = 'omni'
+autocmd FileType vim let b:vcm_tab_complete = 'vim'
+
+" Grepper
+let g:grepper = {}
+let g:grepper.tools = ['git', 'ag', 'grep']
+nnoremap <Leader>g :Grepper -tool ag<CR>
+nnoremap <Leader>G :Grepper -tool ag -buffers<CR>
+nmap gs  <Plug>(GrepperOperator)
+xmap gs  <Plug>(GrepperOperator)
+" Search for word under cursor
+nnoremap <leader>* :Grepper -tool ag -cword -noprompt<CR>
+
+" Jedi python
+let g:jedi#goto_command = '<Leader>jg'
+let g:jedi#goto_definitions_command = '<Leader>jd'
+let g:jedi#goto_assignments_command = '<Leader>ja'
+let g:jedi#documentation_command = 'K'
+let g:jedi#usages_command = '<Leader>ju'
+let g:jedi#rename_command = '<Leader>jr'
+let g:jedi#goto_stubs_command = ''
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -327,12 +371,13 @@ set statusline+=%#identifier#
 set statusline+=%m
 set statusline+=%*
 
+" Display git info (with Fugitive)
 "set statusline+=%{fugitive#statusline()}
 
 "display a warning if &et is wrong, or we have mixed-indenting
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%*
+"set statusline+=%#error#
+"set statusline+=%{StatuslineTabWarning()}
+"set statusline+=%*
 
 set statusline+=%{StatuslineTrailingSpaceWarning()}
 
@@ -418,7 +463,7 @@ endfunction
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle paste mode on and off
-"map <leader>pp :setlocal paste!<CR>
+"map <Leader>pp :setlocal paste!<CR>
 
 " Saves with sudo in case you've forgotten
 cmap w!! %!sudo tee > /dev/null %
