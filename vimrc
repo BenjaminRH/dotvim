@@ -1,7 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       Benjamin R. Harris
-"
 " Sections:
 "    -> General
 "    -> VIM user interface
@@ -52,6 +49,12 @@ inoremap ii <Esc>
 set shell=bash
 set shellcmdflag=-ic
 let g:is_bash=1
+
+" Autocomplete menu
+set wildmenu
+set wildmode=longest,list
+set wildignore+=*.a,*.o
+set wildignore+=.git,.svn,.hg
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,18 +128,8 @@ set matchpairs+=<:>
 " Clear the search buffer when hitting return
 :nnoremap <leader><cr> :nohlsearch<cr>
 
-" Hide some GUI crap
-set guioptions-=m " No menu bar
-set guioptions-=T " No toolbar
-set guioptions-=r " No scrollbar (right)
-set guioptions-=R " No scrollbar (right, on vertical split windows)
-set guioptions-=l " No scrollbar (left)
-set guioptions-=L " No scrollbar (left, on vertical split windows)
-set guioptions-=b " No scrollbar (bottom)
-
 " No damn beeping
 set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -212,8 +205,9 @@ set nowrap
 " But wrap lines for text/markdown files
 autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
 
-" Go (golang) specific indentation settings
+" We want tabs for the following though
 autocmd FileType go set noexpandtab
+autocmd BufNewFile,BufRead Makefile,Makefile.*,*.mk setlocal noexpandtab
 
 " Indicator chars
 set list
@@ -274,67 +268,30 @@ nmap <leader>bda :1,1000 bd<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Toggle the NERDTree window
-map <leader>d :NERDTreeToggle<cr>
-
-" Open NERDTree automatically when vim starts up if no files were specified
-"autocmd vimenter * if !argc() | NERDTree | endif
-
-" DETECT INDENT
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
-autocmd BufReadPost * :DetectIndent " Run automatically when opening a file
-
-" Use TernJS for autocompleting JavaScript
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-
 " Syntastic should use JSHint for JavaScript debugging
 let g:syntastic_javascript_checkers = ['jshint']
 
-" Close vim if the only window open is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Add Mustache/Handlebars tag autocompletion and stuff (abbreviations)
-let g:mustache_abbreviations = 1
-
-" Supertabs should decide which completion method to use automatically
-" let g:SuperTabDefaultCompletionType = 'context' " Or '<C-x><C-o>' for omni completion
-" let g:SuperTabClosePreviewOnPopupClose = 1 " And don't leave that annoying preview window open
-
-" YouCompleteMe automatically close annoying completion preview window open
-let g:ycm_autoclose_preview_window_after_completion = 1
-
-" Interactive mode for vim-easy-align (repeats with ., etc.)
+" Interactive mode for vim-easy-align
+" TIP: press <C-x> for regex, or :EasyAlign /regex/
 vmap <Enter>   <Plug>(EasyAlign)
+vmap <leader>a <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
 
-" Automatically close html-style tags
-autocmd FileType xhtml,xml,html,markdown,blade source ~/.vim/bundle/html-autoclosetag/ftplugin/html_autoclosetag.vim
+" Easymotion
+map <Leader><Leader> <Plug>(easymotion-prefix)
 
-" Toggle the MiniBufExplorer window
-map <leader>ls :MBEToggle<cr>:MBEFocus<cr>
+" Ctrl+P
+map <Space> :CtrlPMixed
+map <Space>b :CtrlPBuffer
+map <Space>f :CtrlP
+" Recognize project root
+let g:ctrlp_root_markers = ['.git', '.hg', '.svn', '.idea']
+" Ignore files/directories (including those listed in .gitignore)
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-" Focus on the MiniBufExplorer window
-map <leader>f :MBEFocus<cr>
-
-" Toggle the Tagbar
-nmap <leader>t :TagbarToggle<cr>
-
-" VIM-GO SETTING:
-" Turn off auto-installation of requried binaries
-let g:go_disable_autoinstall = 1
-" Import the package under the cursor
-au FileType go nmap <Leader>gi <Plug>(go-import)
-" Open the relevant Godoc for the word under the cursor
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gvd <Plug>(go-doc-vertical)
-" Go run, build, and test
-au FileType go nmap <leader>gr <Plug>(go-run)
-au FileType go nmap <leader>gb <Plug>(go-build)
-au FileType go nmap <leader>gt <Plug>(go-test)
-" Go def
-au FileType go nmap <Leader>gf <Plug>(go-def-split)
-au FileType go nmap <Leader>gvf <Plug>(go-def-vertical)
+" Completor
+let g:completor_python_binary = '/usr/local/bin/python'
+let g:completor_clang_binary = '/usr/bin/clang'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -368,7 +325,7 @@ set statusline+=%#identifier#
 set statusline+=%m
 set statusline+=%*
 
-set statusline+=%{fugitive#statusline()}
+#set statusline+=%{fugitive#statusline()}
 
 "display a warning if &et is wrong, or we have mixed-indenting
 set statusline+=%#error#
