@@ -46,7 +46,7 @@ let g:is_bash=1
 
 " Autocomplete menu
 set wildmenu
-set wildmode=longest,list
+set wildmode=list:full
 set wildignore+=*.a,*.o
 set wildignore+=.git,.svn,.hg
 
