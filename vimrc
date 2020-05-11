@@ -39,12 +39,6 @@ set autoread
 " Set the leader
 let mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" Fast mode escape
-inoremap ii <Esc>
-
 " Get the shell sorted out properly
 set shell=bash
 set shellcmdflag=-ic
@@ -105,7 +99,7 @@ set hlsearch
 set incsearch
 
 " Ignore case when searching
-set ignorecase
+"set ignorecase
 
 " Don't ignore the case if the search contains at least one capital letter
 set smartcase
@@ -126,7 +120,7 @@ set showmatch
 set matchpairs+=<:>
 
 " Clear the search buffer when hitting return
-:nnoremap <leader><cr> :nohlsearch<cr>
+:nnoremap <leader><CR> :nohlsearch<CR>
 
 " No damn beeping
 set noerrorbells visualbell t_vb=
@@ -163,7 +157,7 @@ set ffs=unix,dos,mac
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off, since most stuff is version controlled anyway
 set nobackup
 set nowb
 set noswapfile
@@ -173,6 +167,10 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " Save more easily
 map <C-s> :w<CR>
+
+" Save undo history
+set undofile
+set undodir=~/.vim/.undo
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -241,7 +239,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+map <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -253,16 +251,16 @@ autocmd BufReadPost *
 set viminfo^=%
 
 " Switch to the next buffer
-nmap <leader>bn :bn<cr>
+nmap <leader>bn :bn<CR>
 
 " Or the previous buffer
-nmap <leader>bp :bp<cr>
+nmap <leader>bp :bp<CR>
 
 " Delete the current buffer (preserving the window)
-nmap <leader>bd :bd<cr>
+nmap <leader>bd :bd<CR>
 
 " Delete all the open buffers
-nmap <leader>bda :1,1000 bd<cr>
+nmap <leader>bda :1,1000 bd<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -281,9 +279,10 @@ nmap <leader>a <Plug>(EasyAlign)
 map <Leader><Leader> <Plug>(easymotion-prefix)
 
 " Ctrl+P
-map <Space> :CtrlPMixed
-map <Space>b :CtrlPBuffer
-map <Space>f :CtrlP
+map <Space> :CtrlPBuffer<CR>
+map <Space>b :CtrlPBuffer<CR>
+map <Space>f :CtrlP<CR>
+map <Space>m :CtrlPMixed<CR>
 " Recognize project root
 let g:ctrlp_root_markers = ['.git', '.hg', '.svn', '.idea']
 " Ignore files/directories (including those listed in .gitignore)
@@ -292,6 +291,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 " Completor
 let g:completor_python_binary = '/usr/local/bin/python'
 let g:completor_clang_binary = '/usr/bin/clang'
+
+" Mundo (undo visualization)
+map U :MundoToggle<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -325,7 +327,7 @@ set statusline+=%#identifier#
 set statusline+=%m
 set statusline+=%*
 
-#set statusline+=%{fugitive#statusline()}
+"set statusline+=%{fugitive#statusline()}
 
 "display a warning if &et is wrong, or we have mixed-indenting
 set statusline+=%#error#
@@ -416,7 +418,7 @@ endfunction
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle paste mode on and off
-"map <leader>pp :setlocal paste!<cr>
+"map <leader>pp :setlocal paste!<CR>
 
 " Saves with sudo in case you've forgotten
 cmap w!! %!sudo tee > /dev/null %
@@ -441,4 +443,4 @@ function! NumberToggle()
   endif
 endfunc
 
-nnoremap <F9> :call NumberToggle()<cr>
+nnoremap <F9> :call NumberToggle()<CR>

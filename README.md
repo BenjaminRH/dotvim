@@ -26,11 +26,16 @@ A list of plugins used. Plugin specific settings are located in the vimrc in the
  * *vim-easy-align* - Easily align lines of text however you want
  * *vim-easymotion* - Jump to any word or character on screen with `,,w`/`,,c`
  * *vim-easyoperator-line* - Extends `vim-easymotion` to jump to lines with `,,l`
+ * *vim-mundo* - Undo tree visualizer
  * *vim-pathogen* - Plugin manager for vim
  * *vim-polyglot* - Syntax support for tons of languages/filetypes
  * *vim-repeat* - Allows many things to be repeated with vim's `.` command
  * *vim-surround* - Add/remove braces/parens/etc. around objects
  * *vim-visual-star-search* - Support star/hash search in visual mode
+
+
+## Dependencies
+Currently there are no third-party binaries we rely on.
 
 
 ## Manage plugins
