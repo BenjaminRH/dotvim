@@ -99,7 +99,7 @@ set hlsearch
 set incsearch
 
 " Ignore case when searching
-"set ignorecase
+set ignorecase
 
 " Don't ignore the case if the search contains at least one capital letter
 set smartcase
