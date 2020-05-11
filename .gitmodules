@@ -7,18 +7,9 @@
 [submodule "bundle/vim-surround"]
 	path = bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "bundle/vim-blade"]
-	path = bundle/vim-blade
-	url = https://github.com/xsbeats/vim-blade.git
-[submodule "bundle/vim-matchit"]
-	path = bundle/vim-matchit
-	url = https://github.com/perrywky/vim-matchit.git
 [submodule "bundle/vim-easy-align"]
 	path = bundle/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
@@ -34,51 +25,9 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "bundle/tagbar"]
-	path = bundle/tagbar
-	url = https://github.com/majutsushi/tagbar.git
-[submodule "bundle/tagbar-phpctags.vim"]
-	path = bundle/tagbar-phpctags.vim
-	url = https://github.com/vim-php/tagbar-phpctags.vim.git
-[submodule "bundle/vim-fugitive"]
-	path = bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "bundle/html-autoclosetag"]
-	path = bundle/html-autoclosetag
-	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
-[submodule "bundle/vim-mustache-handlebars"]
-	path = bundle/vim-mustache-handlebars
-	url = https://github.com/mustache/vim-mustache-handlebars.git
 [submodule "bundle/targets.vim"]
 	path = bundle/targets.vim
 	url = https://github.com/wellle/targets.vim.git
-[submodule "bundle/vim-less"]
-	path = bundle/vim-less
-	url = https://github.com/genoma/vim-less.git
-[submodule "bundle/tern_for_vim"]
-	path = bundle/tern_for_vim
-	url = https://github.com/marijnh/tern_for_vim.git
-[submodule "bundle/vim-go"]
-	path = bundle/vim-go
-	url = https://github.com/fatih/vim-go.git
-[submodule "bundle/YouCompleteMe"]
-	path = bundle/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe.git
-[submodule "bundle/vim-smartinput"]
-	path = bundle/vim-smartinput
-	url = https://github.com/kana/vim-smartinput
-[submodule "bundle/vim-javascript"]
-	path = bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript
-[submodule "bundle/detectindent"]
-	path = bundle/detectindent
-	url = https://github.com/ciaranm/detectindent
-[submodule "bundle/closetag"]
-	path = bundle/closetag
-	url = https://github.com/vim-scripts/closetag.vim
 [submodule "bundle/vim-visual-star-search"]
 	path = bundle/vim-visual-star-search
 	url = https://github.com/bronson/vim-visual-star-search.git
-[submodule "bundle/vinarise.vim"]
-	path = bundle/vinarise.vim
-	url = https://github.com/Shougo/vinarise.vim.git
