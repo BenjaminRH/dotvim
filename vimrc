@@ -277,6 +277,7 @@ nmap <Leader>lp :cprevious<CR>
 " Manage buffers
 nnoremap <Space> :ls<CR>:b<Space>
 nnoremap <Leader>bb :ls<CR>:b<Space>
+nnoremap <Leader>bd :ls<CR>:bd<Space>
 nnoremap <Leader>bv :ls<CR>:vsp<Space>\|<Space>b<Space>
 nnoremap <Leader>bs :ls<CR>:sp<Space>\|<Space>b<Space>
 
