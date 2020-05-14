@@ -13,6 +13,7 @@ Open a terminal and run the following:
 ## Plugins
 A list of plugins used. Plugin specific settings are located in the vimrc in the "Plugin settings" section.
 
+ * [any-jump.vim](https://github.com/pechorin/any-jump.vim) - Lightweight jump-to-definition based on regex of language syntax
  * [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) - Fuzzy search files/buffers/tags/etc. with `CTRL+P`
  * [jedi-vim](https://github.com/davidhalter/jedi-vim) - Bindings for the Jedi Python library
  * [quickfix-reflector.vim](https://github.com/stefandtw/quickfix-reflector.vim) - Edit files from the quickfix window
@@ -38,11 +39,11 @@ A list of plugins used. Plugin specific settings are located in the vimrc in the
 
 
 ## Dependencies
-There are some optional external projects that plugins can take advantage of, although currently none of these are required.
+There are some optional external projects that plugins can take advantage of.
 
  * [jedi](https://pypi.org/project/jedi/) - Python static analysis tool. Used by `jedi-vim` for Python language autocompletion
  * [clang](https://clang.llvm.org/) - C compiler. Used by `vim-clang` for C-family language autocompletion
- * [ag](https://github.com/ggreer/the_silver_searcher) - Better ack/grep. Used by `vim-grepper` to search, if available
+ * [ag](https://github.com/ggreer/the_silver_searcher) - Better ack/grep. Used by `vim-grepper` to search, if available. Required by any-jump.vim
 
 
 ## Manage plugins
