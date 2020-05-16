@@ -6,9 +6,11 @@
 "    -> Files and backups
 "    -> Text, tab and indent related
 "    -> Visual mode related
-"    -> Moving around, tabs and buffers
+"    -> Moving around, tabs, windows and buffers
 "    -> Plugin settings
 "    -> Status line
+"    -> Netrw
+"    -> Folding
 "    -> Misc
 "    -> Helper functions
 "
@@ -27,9 +29,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " Turn on pathogen
 execute pathogen#infect()
 
-" Enable filetype plugins
-filetype plugin indent on
-
 " Sets how many lines of history VIM has to remember
 set history=700
 
@@ -37,7 +36,7 @@ set history=700
 set autoread
 
 " Set the leader
-let mapleader = ","
+let mapleader=","
 
 " Get the shell sorted out properly
 set shell=bash
@@ -72,20 +71,26 @@ set sidescrolloff=15
 " When scrolling sideways, advance cursor by this many characters
 set sidescroll=1
 
-" Add non-relative line numbers where the current line displays the actual line number
+" Add relative line numbers where the current line displays the actual line number
 set number
-set norelativenumber
+set relativenumber
 
-"Always show current position
+" Always show current position
 set ruler
 
-" Show how many characters/lines are selected
+" Show partial command at bottom of screen
 set showcmd
+
+" Show current mode at bottom of screen
+set showmode
+
+" Always display status bar
+set laststatus=2
 
 " Height of the command bar
 set cmdheight=2
 
-" A buffer becomes hidden when it is abandoned
+" A buffer becomes hidden when it is abandoned (background buffers)
 set hidden
 
 " Configure backspace so it acts as it should act
@@ -95,7 +100,7 @@ set whichwrap+=<,>,h,l
 " Highlight search results
 set hlsearch
 
-" Makes search act like search in modern browsers
+" Match-as-you-type searching
 set incsearch
 
 " Ignore case when searching
@@ -120,7 +125,7 @@ set showmatch
 set matchpairs+=<:>
 
 " Clear the search buffer when hitting return
-:nnoremap <Leader><CR> :nohlsearch<CR>
+nnoremap <Leader><CR> :nohlsearch<CR>
 
 " No damn beeping
 set noerrorbells visualbell t_vb=
@@ -147,7 +152,7 @@ else
     let g:solarized_visibility="high"
 endif
 
-" Set utf8 as standard encoding and en_US as the standard language
+" Set utf8 as standard encoding
 set encoding=utf8
 
 " Use Unix as the standard file type
@@ -163,13 +168,16 @@ set nowb
 set noswapfile
 
 " Recognize markdown files
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+augroup filetype_markdown
+    autocmd!
+    autocmd BufRead,BufNewFile *.md set filetype=markdown
+augroup END
 
 " Save more easily
 " NOTE: disabled because this messes with other mappings and is annoying
 "map <C-s> :w<CR>
 
-" Save undo history
+" Save undo history persistently
 set undofile
 set undodir=~/.vim/.undo
 
@@ -192,21 +200,27 @@ set shiftwidth=4
 " set linebreak
 " set textwidth=500
 
+" Enable smart indent
+filetype plugin indent on
+
 " Auto indent
 set autoindent
-
-" Smart indent
-set smartindent
 
 " Do not wrap lines
 set nowrap
 
 " But wrap lines for text/markdown files
-autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
+augroup filetype_markdown_wrap_lines
+    autocmd!
+    autocmd BufNewFile,BufRead *.txt,*.md setlocal wrap
+augroup END
 
 " We want tabs for the following though
-autocmd FileType go set noexpandtab
-autocmd BufNewFile,BufRead Makefile,Makefile.*,*.mk setlocal noexpandtab
+augroup filetype_noexpandtab
+    autocmd!
+    autocmd FileType go set noexpandtab
+    autocmd BufNewFile,BufRead Makefile,Makefile.*,*.mk setlocal noexpandtab
+augroup END
 
 " Indicator chars
 set list
@@ -225,54 +239,61 @@ set nojoinspaces     " Use only 1 space after "." when joining lines, not 2
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
+" Make '.' work in visual mode like it does in normal mode
+vnoremap . :normal.<CR>
+
+" J/K to move selected lines down/up (and automatically reindent + reselect)
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
+noremap j gj
+noremap k gk
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
 
 " Switch CWD to the directory of the open buffer
-map <Leader>cd :cd %:p:h<CR>:pwd<CR>
+noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Return to last edit position when opening files
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+augroup return_last_edit_position
+    autocmd!
+    autocmd BufReadPost *
+         \ if line("'\"") > 0 && line("'\"") <= line("$") |
+         \   exe "normal! g`\"" |
+         \ endif
+augroup END
 
 " Remember info about open buffers on close
 set viminfo^=%
 
 " Switch to the next buffer
-nmap <Leader>bn :bn<CR>
+nnoremap <Leader>n :bn<CR>
 
-" Or the previous buffer
-nmap <Leader>bp :bp<CR>
-
-" Delete the current buffer (preserving the window)
-nmap <Leader>bd :bd<CR>
+" Switch to the previous buffer
+nnoremap <Leader>p :bp<CR>
 
 " Delete all the open buffers
-nmap <Leader>bda :1,1000 bd<CR>
+nnoremap <Leader>bda :1,1000 bd<CR>
 
 " Quickfix window
-nmap <Leader>qo :copen<CR>
-nmap <Leader>qc :cclose<CR>
-nmap <Leader>qn :cnext<CR>
-nmap <Leader>qp :cprevious<CR>
+nnoremap <Leader>qo :copen<CR>
+nnoremap <Leader>qc :cclose<CR>
+nnoremap <Leader>qn :cnext<CR>
+nnoremap <Leader>qp :cprevious<CR>
 " Local window
-nmap <Leader>lo :copen<CR>
-nmap <Leader>lc :cclose<CR>
-nmap <Leader>ln :cnext<CR>
-nmap <Leader>lp :cprevious<CR>
+nnoremap <Leader>lo :copen<CR>
+nnoremap <Leader>lc :cclose<CR>
+nnoremap <Leader>ln :cnext<CR>
+nnoremap <Leader>lp :cprevious<CR>
 
 " Manage buffers
 nnoremap <Space> :ls<CR>:b<Space>
@@ -285,7 +306,10 @@ nnoremap <Leader>bs :ls<CR>:sp<Space>\|<Space>b<Space>
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic should use JSHint for JavaScript debugging
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers=['jshint']
+
+nnoremap <Leader>sc :SyntasticCheck<CR>
+nnoremap <Leader>sr :SyntasticReset<CR>
 
 " Interactive mode for vim-easy-align
 " TIP: press <C-x> for regex, or :EasyAlign /regex/
@@ -306,24 +330,27 @@ map <Leader>l <Plug>(easymotion-bd-jk)
 nmap <Leader>l <Plug>(easymotion-overwin-line)
 
 " Ctrl+P
-nmap <Leader>pp :CtrlP<CR>
-nmap <Leader>pb :CtrlPBuffer<CR>
-nmap <Leader>pm :CtrlPMixed<CR>
+nnoremap <Leader>fp :CtrlP<CR>
+nnoremap <Leader>fb :CtrlPBuffer<CR>
+nnoremap <Leader>fm :CtrlPMixed<CR>
 " Recognize project root
-let g:ctrlp_root_markers = ['.git', '.hg', '.svn', '.idea']
+let g:ctrlp_root_markers=['.git', '.hg', '.svn', '.idea']
 " Ignore files/directories (including those listed in .gitignore)
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_user_command=['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Mundo (undo visualization)
-map U :MundoToggle<CR>
+noremap U :MundoToggle<CR>
 
 " VimCompletesMe
-let b:vcm_tab_complete = 'omni'
-autocmd FileType vim let b:vcm_tab_complete = 'vim'
+"let b:vcm_tab_complete='omni'
+augroup filetype_vim_autocomplete
+    autocmd!
+    autocmd FileType vim let b:vcm_tab_complete='vim'
+augroup END
 
 " Grepper
-let g:grepper = {}
-let g:grepper.tools = ['git', 'ag', 'grep']
+let g:grepper={}
+let g:grepper.tools=['git', 'ag', 'grep']
 nnoremap <Leader>g :Grepper -tool ag<CR>
 nnoremap <Leader>G :Grepper -tool ag -buffers<CR>
 nmap gs  <Plug>(GrepperOperator)
@@ -332,13 +359,13 @@ xmap gs  <Plug>(GrepperOperator)
 nnoremap <leader>* :Grepper -tool ag -cword -noprompt<CR>
 
 " Jedi python
-let g:jedi#goto_command = '<Leader>jg'
-let g:jedi#goto_definitions_command = '<Leader>jd'
-let g:jedi#goto_assignments_command = '<Leader>ja'
-let g:jedi#documentation_command = 'K'
-let g:jedi#usages_command = '<Leader>ju'
-let g:jedi#rename_command = '<Leader>jr'
-let g:jedi#goto_stubs_command = ''
+let g:jedi#goto_command='<Leader>pg'
+let g:jedi#goto_definitions_command='<Leader>pd'
+let g:jedi#goto_assignments_command='<Leader>pa'
+let g:jedi#documentation_command='K'
+let g:jedi#usages_command='<Leader>pu'
+let g:jedi#rename_command='<Leader>pr'
+let g:jedi#goto_stubs_command=''
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -375,13 +402,6 @@ set statusline+=%*
 " Display git info (with Fugitive)
 "set statusline+=%{fugitive#statusline()}
 
-"display a warning if &et is wrong, or we have mixed-indenting
-"set statusline+=%#error#
-"set statusline+=%{StatuslineTabWarning()}
-"set statusline+=%*
-
-set statusline+=%{StatuslineTrailingSpaceWarning()}
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -396,34 +416,10 @@ set statusline+=%{StatuslineCurrentHighlight()}\ \ "current highlight
 set statusline+=%c,     "cursor column
 set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
-set laststatus=2
-
-"recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
-
-"return '[\s]' if trailing white space is detected
-"return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
-
-        if !&modifiable
-            let b:statusline_trailing_space_warning = ''
-            return b:statusline_trailing_space_warning
-        endif
-
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
-
 
 "return the syntax highlight group under the cursor ''
 function! StatuslineCurrentHighlight()
-    let name = synIDattr(synID(line('.'),col('.'),1),'name')
+    let name=synIDattr(synID(line('.'),col('.'),1),'name')
     if name == ''
         return ''
     else
@@ -431,43 +427,55 @@ function! StatuslineCurrentHighlight()
     endif
 endfunction
 
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 
-"return '[&et]' if &et is set wrong
-"return '[mixed-indenting]' if spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let b:statusline_tab_warning = ''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Netrw
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" List style should be an expandable tree
+let g:netrw_liststyle=3
 
-        if !&modifiable
-            return b:statusline_tab_warning
-        endif
+" Don't display quick-help banner
+let g:netrw_banner=0
 
-        let tabs = search('^\t', 'nw') != 0
+" In which window should the file open
+"let g:netrw_browse_split=4 " Previous window
+let g:netrw_browse_split=0 " netrw window
 
-        "find spaces that arent used as alignment in the first indent column
-        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+" Set netrw window size to percent of page
+let g:netrw_winsize=25
 
-        if tabs && spaces
-            let b:statusline_tab_warning =  '[mixed-indenting]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
+" Toggle netrw as a vertical split on the far left
+"nnoremap <Leader>d :Lexplore<CR>
+"vnoremap <Leader>d :Lexplore<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Folding
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable folding
+"set foldenable
+
+" Open most of the folds by default (0 would be all)
+set foldlevelstart=10
+
+" Max nested folds
+set foldnestmax=10
+
+" Fold control method (manual/indent/syntax)
+set foldmethod=indent
+
+" Extra column next to line numbers, indicating fold status
+"set foldcolumn=1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle paste mode on and off
-"map <Leader>pp :setlocal paste!<CR>
+"noremap <Leader>pp :setlocal paste!<CR>
 
 " Saves with sudo in case you've forgotten
-cmap w!! %!sudo tee > /dev/null %
+cnoremap w!! %!sudo tee > /dev/null %
 
 " Alias the unnamed register to the + register (X Windows clipboard)
 "set clipboard=unnamedplus " Linux
@@ -475,6 +483,9 @@ set clipboard=unnamed " Mac
 
 " Find TODO comments in the current working directory
 noremap <Leader>todo :noautocmd vimgrep /TODO/j **/*.*<CR>:cw<CR>
+
+" Display [x/y] in bottom right of screen when searching
+set shortmess-=S
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -490,3 +501,24 @@ function! NumberToggle()
 endfunc
 
 nnoremap <F9> :call NumberToggle()<CR>
+
+" Auto number indexes in array from 0-n
+" Example:
+"     FROM:
+"         foo[] = 'a';
+"         foo[] = 'b';
+"         foo[] = 'c';
+"     TO:
+"         foo[0] = 'a';
+"         foo[1] = 'b';
+"         foo[2] = 'c';
+"
+function! AutoNumberIndexes() range
+    let i=0 | '<,'>g/\[\d*\]/ s/\[\d*\]/\='['.i.']'/ | let i+=1
+    " NOTE: we don't support multiple array assignments on each line, because
+    " adding /g flag to the substitution wouldn't increment i multiple times.
+    " There are tricks, e.g. adding elements to an array in the substitution
+    " replacement expression, but whatever.
+endfunc
+
+vnoremap <Leader>i :call AutoNumberIndexes()<CR>
