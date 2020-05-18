@@ -199,6 +199,8 @@ set shiftwidth=4
 " Linebreak on 500 characters
 " set linebreak
 " set textwidth=500
+set nolinebreak
+set textwidth=0
 
 " Enable smart indent
 filetype plugin indent on
@@ -486,6 +488,17 @@ noremap <Leader>todo :noautocmd vimgrep /TODO/j **/*.*<CR>:cw<CR>
 
 " Display [x/y] in bottom right of screen when searching
 set shortmess-=S
+
+" Dictionary for spell checking and dictionary autocomplete
+set dictionary+=/usr/share/dict/words
+
+" The 'isfname' setting determines which characters are considered part of a path (for 'gf' or file autocomplete)
+" Here we remove a few common prefixes for easier path autocompletion
+set isfname-==
+set isfname-='
+set isfname-=\"
+set isfname-=(
+set isfname-=<
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
