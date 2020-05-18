@@ -13,12 +13,12 @@ Open a terminal and run the following:
 ## Plugins
 A list of plugins used. Plugin specific settings are located in the vimrc in the "Plugin settings" section.
 
+ * [Asynchronous Lint Engine (ALE)](https://github.com/dense-analysis/ale) - Syntax checking for different languages ([Language Server Protocol](https://langserver.org/) client)
  * [any-jump.vim](https://github.com/pechorin/any-jump.vim) - Lightweight jump-to-definition based on regex of language syntax
  * [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) - Fuzzy search files/buffers/tags/etc. with `CTRL+P`
  * [jedi-vim](https://github.com/davidhalter/jedi-vim) - Bindings for the Jedi Python library
  * [quickfix-reflector.vim](https://github.com/stefandtw/quickfix-reflector.vim) - Edit files from the quickfix window
  * [splitjoin.vim](https://github.com/AndrewRadev/splitjoin.vim) - Split/join lines of code in different languages with `gS`/`gJ`
- * [syntastic](https://github.com/vim-syntastic/syntastic) - Syntax checking for different languages
  * [targets.vim](https://github.com/wellle/targets.vim) - Adds additional vim targets, such as commas, quotes, tags, etc.
  * [tcomment](https://github.com/tomtom/tcomment_vim) - Comment/uncomment lines of code in different languages with `gc`
  * [vim-abolish](https://github.com/tpope/vim-abolish) - Better search/replace with `:S` including case-preserving replaces, unix-style `{a,b}` expansion, etc. Also coerce cases with `cr<X>` (`<X>` is s for snake, c for camel, m for mixed, etc.)
@@ -63,8 +63,11 @@ Remove the submodule:
 
     git rm -f bundle/vim-plugin
 
-Remove the entry from the .gitmodules file, then commit it:
+If the submodule had not been initialized:
 
     sed -i -e '/submodule "bundle\/vim-plugin"/,+2d' .gitmodules
     git add .gitmodules
+
+Remove the entry from the .gitmodules file, then commit it:
+
     git commit -m "Removed vim-plugin"

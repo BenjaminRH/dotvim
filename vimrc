@@ -6,6 +6,7 @@
 "    -> Files and backups
 "    -> Text, tab and indent related
 "    -> Visual mode related
+"    -> Ex mode related
 "    -> Moving around, tabs, windows and buffers
 "    -> Plugin settings
 "    -> Status line
@@ -36,12 +37,12 @@ set history=700
 set autoread
 
 " Set the leader
-let mapleader=","
+let mapleader = ","
 
 " Get the shell sorted out properly
 set shell=bash
 set shellcmdflag=-ic
-let g:is_bash=1
+let g:is_bash = 1
 
 " Autocomplete menu
 set wildmenu
@@ -250,6 +251,13 @@ vnoremap K :m '<-2<CR>gv=gv
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Ex mode related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Emacs-like Control+A mapping
+cnoremap <C-a> <Home>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines (useful when moving around in them)
@@ -291,11 +299,15 @@ nnoremap <Leader>qo :copen<CR>
 nnoremap <Leader>qc :cclose<CR>
 nnoremap <Leader>qn :cnext<CR>
 nnoremap <Leader>qp :cprevious<CR>
+nnoremap <Leader>qf :cfirst<CR>
+nnoremap <Leader>ql :clast<CR>
 " Local window
-nnoremap <Leader>lo :copen<CR>
-nnoremap <Leader>lc :cclose<CR>
-nnoremap <Leader>ln :cnext<CR>
-nnoremap <Leader>lp :cprevious<CR>
+nnoremap <Leader>lo :lopen<CR>
+nnoremap <Leader>lc :lclose<CR>
+nnoremap <Leader>ln :lnext<CR>
+nnoremap <Leader>lp :lprevious<CR>
+nnoremap <Leader>lf :lfirst<CR>
+nnoremap <Leader>ll :llast<CR>
 
 " Manage buffers
 nnoremap <Space> :ls<CR>:b<Space>
@@ -307,11 +319,30 @@ nnoremap <Leader>bs :ls<CR>:sp<Space>\|<Space>b<Space>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Syntastic should use JSHint for JavaScript debugging
-let g:syntastic_javascript_checkers=['jshint']
+" Disable ALE by default
+let g:ale_enabled = 0
+" But when ALE is disabled, lint when all these things happen
+let g:ale_lint_on_text_changed = 'normal' " 'never'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
 
-nnoremap <Leader>sc :SyntasticCheck<CR>
-nnoremap <Leader>sr :SyntasticReset<CR>
+" Navigation between ALE errors/warnings
+nnoremap <Leader>sn :ALENext<CR>
+nnoremap <Leader>sp :ALEPrevious<CR>
+nnoremap <Leader>sf :ALEFirst<CR>
+nnoremap <Leader>sl :ALELast<CR>
+nnoremap <Leader>sd :ALEDetail<CR>
+
+" Enable/disable linting
+nnoremap <Leader>sc :ALEEnable<CR>
+nnoremap <Leader>sr :ALEDisable<CR>
+
+augroup ale_linting_plugin
+    autocmd!
+    " Wrap buffer for ALE preview window, so we can see entire message
+    autocmd FileType ale-preview setlocal wrap
+augroup END
 
 " Interactive mode for vim-easy-align
 " TIP: press <C-x> for regex, or :EasyAlign /regex/
@@ -336,9 +367,9 @@ nnoremap <Leader>fp :CtrlP<CR>
 nnoremap <Leader>fb :CtrlPBuffer<CR>
 nnoremap <Leader>fm :CtrlPMixed<CR>
 " Recognize project root
-let g:ctrlp_root_markers=['.git', '.hg', '.svn', '.idea']
+let g:ctrlp_root_markers = ['.git', '.hg', '.svn', '.idea']
 " Ignore files/directories (including those listed in .gitignore)
-let g:ctrlp_user_command=['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Mundo (undo visualization)
 noremap U :MundoToggle<CR>
@@ -351,8 +382,8 @@ augroup filetype_vim_autocomplete
 augroup END
 
 " Grepper
-let g:grepper={}
-let g:grepper.tools=['git', 'ag', 'grep']
+let g:grepper = {}
+let g:grepper.tools = ['git', 'ag', 'grep']
 nnoremap <Leader>g :Grepper -tool ag<CR>
 nnoremap <Leader>G :Grepper -tool ag -buffers<CR>
 nmap gs  <Plug>(GrepperOperator)
@@ -361,13 +392,13 @@ xmap gs  <Plug>(GrepperOperator)
 nnoremap <leader>* :Grepper -tool ag -cword -noprompt<CR>
 
 " Jedi python
-let g:jedi#goto_command='<Leader>pg'
-let g:jedi#goto_definitions_command='<Leader>pd'
-let g:jedi#goto_assignments_command='<Leader>pa'
-let g:jedi#documentation_command='K'
-let g:jedi#usages_command='<Leader>pu'
-let g:jedi#rename_command='<Leader>pr'
-let g:jedi#goto_stubs_command=''
+let g:jedi#goto_command = '<Leader>pg'
+let g:jedi#goto_definitions_command = '<Leader>pd'
+let g:jedi#goto_assignments_command = '<Leader>pa'
+let g:jedi#documentation_command = 'K'
+let g:jedi#usages_command = '<Leader>pu'
+let g:jedi#rename_command = '<Leader>pr'
+let g:jedi#goto_stubs_command = ''
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -405,7 +436,7 @@ set statusline+=%*
 "set statusline+=%{fugitive#statusline()}
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{ALEStatus()}
 set statusline+=%*
 
 "display a warning if &paste is set
@@ -429,22 +460,39 @@ function! StatuslineCurrentHighlight()
     endif
 endfunction
 
+function! ALEStatus() abort
+    if !g:ale_enabled
+        return ''
+    endif
+
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'ALE: OK' : printf(
+    \   'ALE: E=%d, W=%d',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Netrw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " List style should be an expandable tree
-let g:netrw_liststyle=3
+let g:netrw_liststyle = 3
 
 " Don't display quick-help banner
-let g:netrw_banner=0
+let g:netrw_banner = 0
 
 " In which window should the file open
 "let g:netrw_browse_split=4 " Previous window
-let g:netrw_browse_split=0 " netrw window
+let g:netrw_browse_split = 0 " netrw window
 
 " Set netrw window size to percent of page
-let g:netrw_winsize=25
+let g:netrw_winsize = 25
 
 " Toggle netrw as a vertical split on the far left
 "nnoremap <Leader>d :Lexplore<CR>
