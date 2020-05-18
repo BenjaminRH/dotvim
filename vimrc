@@ -284,7 +284,7 @@ nnoremap <Leader>n :bn<CR>
 nnoremap <Leader>p :bp<CR>
 
 " Delete all the open buffers
-nnoremap <Leader>bda :1,1000 bd<CR>
+nnoremap <Leader>bda :1,.+1000 bd<CR>
 
 " Quickfix window
 nnoremap <Leader>qo :copen<CR>
